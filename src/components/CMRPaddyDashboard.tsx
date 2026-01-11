@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw, TrendingUp, Package, Truck, CheckCircle } from 'lucide-react';
+import { Plus, RefreshCw, TrendingUp, Package, Truck, CheckCircle, Upload } from 'lucide-react';
 import { CMRSeasonService } from '../services/CMRSeasonService';
 import { CMRPaddyReceiptService } from '../services/CMRPaddyReceiptService';
 import { CMRDeliveryService } from '../services/CMRDeliveryService';
+import CMRDataImport from './CMRDataImport';
 import type { CMRSeasonSummary } from '../types';
 
 const cmrSeasonService = new CMRSeasonService();
@@ -16,6 +17,7 @@ export default function CMRPaddyDashboard() {
   const [lastRefreshed, setLastRefreshed] = useState(new Date());
   const [showReceiptModal, setShowReceiptModal] = useState(false);
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
 
   const [receiptForm, setReceiptForm] = useState({
     receipt_date: new Date().toISOString().split('T')[0],
@@ -161,6 +163,13 @@ export default function CMRPaddyDashboard() {
         >
           <Truck size={18} />
           Record CMR Delivery
+        </button>
+        <button
+          onClick={() => setShowImportModal(true)}
+          className="flex items-center gap-2 px-4 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition-all shadow-lg shadow-purple-500/20 text-sm font-medium"
+        >
+          <Upload size={18} />
+          Import 99 ACKs
         </button>
       </div>
 
@@ -524,6 +533,23 @@ export default function CMRPaddyDashboard() {
                 Cancel
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showImportModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <CMRDataImport />
+            <button
+              onClick={() => {
+                setShowImportModal(false);
+                loadSeasonData();
+              }}
+              className="mt-4 w-full px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-all font-medium"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
