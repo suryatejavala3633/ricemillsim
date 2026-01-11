@@ -23,7 +23,7 @@ export class SupervisorWagesService extends BaseService<SupervisorWages> {
     const userId = await this.getUserId();
 
     const totalAmount = (wages.base_salary || 0)
-      + (wages.ack_bonus || 0)
+      + ((wages.ack_bonus || 0) * (wages.acks_completed || 0))
       + (wages.overtime_amount || 0)
       - (wages.deductions || 0);
 
@@ -55,10 +55,11 @@ export class SupervisorWagesService extends BaseService<SupervisorWages> {
 
     const baseSalary = updates.base_salary !== undefined ? updates.base_salary : existing.base_salary;
     const ackBonus = updates.ack_bonus !== undefined ? updates.ack_bonus : existing.ack_bonus;
+    const acksCompleted = updates.acks_completed !== undefined ? updates.acks_completed : existing.acks_completed;
     const overtimeAmount = updates.overtime_amount !== undefined ? updates.overtime_amount : existing.overtime_amount;
     const deductions = updates.deductions !== undefined ? updates.deductions : existing.deductions;
 
-    const totalAmount = baseSalary + ackBonus + overtimeAmount - deductions;
+    const totalAmount = baseSalary + (ackBonus * acksCompleted) + overtimeAmount - deductions;
 
     const { data, error } = await this.supabase
       .from(this.tableName)

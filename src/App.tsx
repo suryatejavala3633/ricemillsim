@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileDown, FileSpreadsheet, RotateCcw, Upload, Download, Calculator, Package, ShoppingCart, DollarSign, Zap, BarChart3, Store, Boxes, Activity } from 'lucide-react';
+import { FileDown, FileSpreadsheet, RotateCcw, Upload, Download } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
 import AuthPage from './components/auth/AuthPage';
 import Layout from './components/layout/Layout';
@@ -16,6 +16,9 @@ import PowerFactorTracker from './components/PowerFactorTracker';
 import ProductionTracker from './components/ProductionTracker';
 import ByProductSalesManager from './components/ByProductSalesManager';
 import InventoryManager from './components/InventoryManager';
+import LorryFreightManager from './components/LorryFreightManager';
+import WagesManager from './components/WagesManager';
+import HamaliWorkManager from './components/HamaliWorkManager';
 import { MillingScenario, RiceType, WorkingCosts, YieldStructure } from './types';
 import { calculateResults } from './calculations';
 import { exportToExcel, exportToPDF } from './utils/exportUtils';
@@ -273,47 +276,11 @@ function MainApp() {
         ) : activeTab === 'production' ? (
           <ProductionTracker />
         ) : activeTab === 'lorry-freight' ? (
-          <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-16 text-center">
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-500/20">
-                <Package size={32} className="text-white" />
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-3 tracking-tight">Lorry Freight Management</h2>
-              <p className="text-gray-400 mb-6 text-sm leading-relaxed">Track ACK deliveries, transporter details, and freight dues. Monitor transporter-wise pending payments.</p>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-xl text-blue-400 text-xs font-medium">
-                <Activity size={14} />
-                Coming Soon
-              </div>
-            </div>
-          </div>
+          <LorryFreightManager />
         ) : activeTab === 'wages' ? (
-          <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-16 text-center">
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/20">
-                <DollarSign size={32} className="text-white" />
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-3 tracking-tight">Wages & Salaries</h2>
-              <p className="text-gray-400 mb-6 text-sm leading-relaxed">Manage supervisor and mill operator wages with ACK bonuses, overtime tracking, and payment records.</p>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs font-medium">
-                <Activity size={14} />
-                Coming Soon
-              </div>
-            </div>
-          </div>
+          <WagesManager />
         ) : activeTab === 'hamali' ? (
-          <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-16 text-center">
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-amber-500/20">
-                <ShoppingCart size={32} className="text-white" />
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-3 tracking-tight">Hamali Work</h2>
-              <p className="text-gray-400 mb-6 text-sm leading-relaxed">Record hamali expenses for loading, unloading, and shifting work. Track worker-wise payments and pending dues.</p>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-400 text-xs font-medium">
-                <Activity size={14} />
-                Coming Soon
-              </div>
-            </div>
-          </div>
+          <HamaliWorkManager />
         ) : activeTab === 'sales' ? (
           <ByProductSalesManager />
         ) : activeTab === 'inventory' ? (
